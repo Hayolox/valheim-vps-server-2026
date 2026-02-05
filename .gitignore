@@ -1,0 +1,10 @@
+# Environment variables
+.env
+
+# World data
+worlds/
+server_data/
+backups/
+
+# Docker
+*.log

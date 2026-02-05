@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  valheim-server:
+    build: .
+    container_name: valheim-server
+    restart: unless-stopped
+    ports:
+      - "${SERVER_PORT:-2456}-2458:2456-2458/udp"
+    env_file:
+      - .env
+    volumes:
+      - ./worlds:/home/steam/.config/unity3d/IronGate/Valheim/worlds
+      - ./server_data:/home/steam/valheim
+      - ./backups:/home/steam/backups
+    stdin_open: true
+    tty: true
