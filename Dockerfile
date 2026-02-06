@@ -22,8 +22,13 @@ RUN useradd -m -s /bin/bash steam
 USER steam
 WORKDIR /home/steam
 
-# Install Valheim server
-RUN /usr/games/steamcmd +force_install_dir /home/steam/valheim \
+# Create symlink and install Valheim
+RUN ln -s /usr/games/steamcmd steamcmd && \
+    ./steamcmd +force_install_dir /home/steam/valheim \
+    +login anonymous \
+    +app_update 896660 validate \
+    +quit || \
+    ./steamcmd +force_install_dir /home/steam/valheim \
     +login anonymous \
     +app_update 896660 validate \
     +quit
