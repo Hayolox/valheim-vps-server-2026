@@ -21,10 +21,13 @@ RUN useradd -m -s /bin/bash steam
 USER steam
 WORKDIR /home/steam
 
-# Install Valheim server
+# Install Valheim server with retry and timeout handling
 RUN ln -s /usr/games/steamcmd steamcmd \
     && ./steamcmd +quit \
-    && ./steamcmd +force_install_dir /home/steam/valheim +login anonymous +app_update 896660 validate +quit
+    && sleep 5 \
+    && (timeout 300 ./steamcmd +force_install_dir /home/steam/valheim +login anonymous +app_update 896660 validate +quit || \
+        (sleep 10 && timeout 300 ./steamcmd +force_install_dir /home/steam/valheim +login anonymous +app_update 896660 validate +quit) || \
+        (sleep 20 && timeout 300 ./steamcmd +force_install_dir /home/steam/valheim +login anonymous +app_update 896660 validate +quit))
 
 WORKDIR /home/steam/valheim
 
