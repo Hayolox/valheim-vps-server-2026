@@ -10,6 +10,16 @@ SERVER_PORT="${SERVER_PORT:-2456}"
 WORLD_NAME="${WORLD_NAME:-Dedicated}"
 SERVER_PASSWORD="${SERVER_PASSWORD:-secret}"
 SERVER_PUBLIC="${SERVER_PUBLIC:-1}"
+ADMINS="${ADMINS:-}"
+
+# Setup admin list if ADMINS env variable is set
+if [ ! -z "$ADMINS" ]; then
+    ADMIN_FILE="/home/steam/.config/unity3d/IronGate/Valheim/adminlist.txt"
+    mkdir -p "$(dirname "$ADMIN_FILE")"
+    echo "Setting up admin list..."
+    echo "$ADMINS" | tr ',' '\n' > "$ADMIN_FILE"
+    echo "Admins configured: $(cat "$ADMIN_FILE" | wc -l)"
+fi
 
 echo "Starting Valheim Server..."
 echo "Server Name: $SERVER_NAME"
