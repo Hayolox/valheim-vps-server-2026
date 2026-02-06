@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get update \
     && echo steam steam/question select "I AGREE" | debconf-set-selections \
     && echo steam steam/license note '' | debconf-set-selections \
-    && apt-get install -y lib32gcc1 steamcmd \
+    && apt-get install -y lib32gcc-s1 steamcmd \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
