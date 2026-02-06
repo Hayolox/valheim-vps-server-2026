@@ -5,13 +5,12 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     software-properties-common \
-    lib32gcc-s1 \
     && add-apt-repository multiverse \
     && dpkg --add-architecture i386 \
     && apt-get update \
     && echo steam steam/question select "I AGREE" | debconf-set-selections \
     && echo steam steam/license note '' | debconf-set-selections \
-    && apt-get install -y steamcmd \
+    && apt-get install -y lib32gcc1 steamcmd \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -22,16 +21,10 @@ RUN useradd -m -s /bin/bash steam
 USER steam
 WORKDIR /home/steam
 
-# Create symlink and install Valheim
-RUN ln -s /usr/games/steamcmd steamcmd && \
-    ./steamcmd +force_install_dir /home/steam/valheim \
-    +login anonymous \
-    +app_update 896660 validate \
-    +quit || \
-    ./steamcmd +force_install_dir /home/steam/valheim \
-    +login anonymous \
-    +app_update 896660 validate \
-    +quit
+# Install Valheim server
+RUN ln -s /usr/games/steamcmd steamcmd \
+    && ./steamcmd +quit \
+    && ./steamcmd +force_install_dir /home/steam/valheim +login anonymous +app_update 896660 validate +quit
 
 WORKDIR /home/steam/valheim
 
