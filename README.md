@@ -120,6 +120,29 @@ docker ps | grep valheim
 docker logs -f valheim-server
 ```
 
+## 🐳 Docker Swarm Deployment
+
+If using Docker Swarm (Dokploy, Portainer, etc):
+
+```bash
+# Check service status
+docker service ls | grep valheim
+
+# Expose UDP ports (if not already exposed)
+docker service update \
+  --publish-add 2456-2458:2456-2458/udp \
+  <service_name>
+
+# Verify ports are published
+docker service inspect <service_name> --pretty
+
+# Check if ports are listening
+netstat -tulpn | grep 2456
+
+# View service logs
+docker service logs -f <service_name>
+```
+
 ## ❓ Troubleshooting
 
 **Server not showing in server list:**
