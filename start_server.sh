@@ -14,11 +14,13 @@ ADMINS="${ADMINS:-}"
 
 # Setup admin list if ADMINS env variable is set
 if [ ! -z "$ADMINS" ]; then
-    ADMIN_FILE="/home/steam/.config/unity3d/IronGate/Valheim/adminlist.txt"
-    mkdir -p "$(dirname "$ADMIN_FILE")"
+    ADMIN_DIR="/home/steam/.config/unity3d/IronGate/Valheim"
+    ADMIN_FILE="$ADMIN_DIR/adminlist.txt"
+    mkdir -p "$ADMIN_DIR"
+    chmod -R 755 "$ADMIN_DIR"
     echo "Setting up admin list..."
     echo "$ADMINS" | tr ',' '\n' > "$ADMIN_FILE"
-    echo "Admins configured: $(cat "$ADMIN_FILE" | wc -l)"
+    echo "Admins configured: $(cat "$ADMIN_FILE" 2>/dev/null | wc -l)"
 fi
 
 echo "Starting Valheim Server..."
