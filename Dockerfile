@@ -34,6 +34,10 @@ WORKDIR /home/steam/valheim
 # Expose ports
 EXPOSE 2456-2458/udp
 
+# Define volumes for persistent data
+VOLUME ["/home/steam/.config/unity3d/IronGate/Valheim/worlds"]
+VOLUME ["/home/steam/.config/unity3d/IronGate/Valheim"]
+
 # Start script
 COPY --chown=steam:steam start_server.sh .
 RUN chmod +x start_server.sh
