@@ -22,7 +22,8 @@ USER steam
 WORKDIR /home/steam
 
 # Pre-create config directory with proper permissions
-RUN mkdir -p /home/steam/.config/unity3d/IronGate/Valheim/worlds
+RUN mkdir -p /home/steam/.config/unity3d/IronGate/Valheim/worlds \
+    && touch /home/steam/.config/unity3d/IronGate/Valheim/adminlist.txt
 
 # Install Valheim server with retry and timeout handling
 RUN ln -s /usr/games/steamcmd steamcmd \
