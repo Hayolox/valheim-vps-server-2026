@@ -13,5 +13,6 @@ services:
       - ./worlds:/home/steam/.config/unity3d/IronGate/Valheim/worlds
       - ./server_data:/home/steam/valheim
       - ./backups:/home/steam/backups
+      - ./adminlist.txt:/home/steam/.config/unity3d/IronGate/Valheim/adminlist.txt
     stdin_open: true
     tty: true

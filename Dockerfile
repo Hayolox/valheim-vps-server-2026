@@ -21,6 +21,9 @@ RUN useradd -m -s /bin/bash steam
 USER steam
 WORKDIR /home/steam
 
+# Pre-create config directory with proper permissions
+RUN mkdir -p /home/steam/.config/unity3d/IronGate/Valheim/worlds
+
 # Install Valheim server with retry and timeout handling
 RUN ln -s /usr/games/steamcmd steamcmd \
     && ./steamcmd +quit \
